@@ -62,11 +62,11 @@
     <div class="container">
         <h2>Safari에서 참마켓을 열어주세요</h2>
         <p>카카오톡 또는 네이버 앱에서는 기능이 제한될 수 있습니다.<br>아래 버튼을 눌러 Safari에서 Charm Market을 열어주세요.</p>
-        <button class="button" onclick="openInSafari();">참마켓 바로가기</button>
+        <button class="button" onclick="openCharmMarket();">참마켓 바로가기</button>
     </div>
 
     <script>
-      function openInSafari() {
+      function openCharmMarket() {
         var url = "https://charm-market.com"; // ✅ 최종 열릴 URL
         var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
         var isAndroid = /Android/i.test(navigator.userAgent);
@@ -87,23 +87,14 @@
           // ✅ iOS & Android 모바일 기본 브라우저에서 실행
           window.location.href = url;
         } else {
-          // ✅ 데스크톱 환경에서는 즉시 사이트로 이동
-          window.location.replace(url);
+          // ✅ 데스크톱 환경에서 강제 이동
+          try {
+            window.location.replace(url);
+          } catch (e) {
+            window.open(url, "_self");
+          }
         }
       }
-
-      // ✅ 웹 브라우저에서 자동 리디렉션 (데스크톱 환경에서)
-      document.addEventListener("DOMContentLoaded", function() {
-        var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-        var isAndroid = /Android/i.test(navigator.userAgent);
-        var isMobile = isIOS || isAndroid;
-
-        if (!isMobile) {
-            setTimeout(function () {
-                window.location.replace("https://charm-market.com");
-            }, 1000); // 1초 후 자동 이동
-        }
-      });
     </script>
 </body>
 </html>
