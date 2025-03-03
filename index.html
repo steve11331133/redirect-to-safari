@@ -3,13 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Safari에서 열기</title>
+    <title>Charm Market - Safari에서 열기</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #333;
+        }
+        p {
+            font-size: 14px;
+            color: #666;
+        }
+        .button {
+            display: inline-block;
+            padding: 15px 20px;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            background-color: #007AFF;
+            border-radius: 5px;
+            text-decoration: none;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .button:hover {
+            background-color: #005ecb;
+        }
+    </style>
 </head>
 <body>
-    <h2>Safari에서 Charm Market을 열어주세요</h2>
-    <p>카카오톡 또는 네이버 앱에서는 기능이 제한될 수 있습니다.<br> 아래 버튼을 눌러 Safari에서 Charm Market을 열어주세요.</p>
-
-    <a id="open-safari-btn" href="#" onclick="openInSafari(); return false;">📢 Safari에서 열기</a>
+    <div class="container">
+        <h2>Safari에서 Charm Market을 열어주세요</h2>
+        <p>카카오톡 또는 네이버 앱에서는 기능이 제한될 수 있습니다.<br>아래 버튼을 눌러 Safari에서 Charm Market을 열어주세요.</p>
+        <a class="button" href="#" onclick="openInSafari(); return false;">📢 Safari에서 열기</a>
+    </div>
 
     <script>
       function openInSafari() {
@@ -20,11 +59,10 @@
 
         if (isIOS && (isKakao || isNaver)) {
           // ✅ iOS 카카오톡 & 네이버 앱에서는 Safari 강제 실행
-          var safariUrl = "itms-apps://apple.com"; // Safari 강제 실행 스킴
-          
-          window.open(safariUrl, "_blank"); // Safari를 실행
+          var safariUrl = "shortcuts://run-shortcut?name=OpenInSafari&input=" + encodeURIComponent(url);
+          window.location.href = safariUrl;
 
-          // ✅ 일정 시간 후 실패할 경우 기본 브라우저에서 실행
+          // ✅ 1.5초 후에도 안 되면 기본 브라우저에서 실행
           setTimeout(function () {
             window.location.href = url;
           }, 1500);
