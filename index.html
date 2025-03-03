@@ -46,7 +46,7 @@
 <body>
     <div class="container">
         <h2>Safari에서 Charm Market을 열어주세요</h2>
-        <p>카카오톡 또는 네이버 앱에서는 기능이 제한될 수 있습니다.<br>아래 버튼을 눌러 Safari에서 Charm Market을 열어주세요.</p>
+        <p>일부 앱에서는 기능이 제한될 수 있습니다.<br>아래 버튼을 눌러 Safari에서 Charm Market을 열어주세요.</p>
         <a class="button" href="#" onclick="openInSafari(); return false;">📢 Safari에서 열기</a>
     </div>
 
@@ -59,13 +59,14 @@
 
         if (isIOS && (isKakao || isNaver)) {
           // ✅ iOS 카카오톡 & 네이버 앱에서는 Safari 강제 실행
-          var safariUrl = "shortcuts://run-shortcut?name=OpenInSafari&input=" + encodeURIComponent(url);
-          window.location.href = safariUrl;
+          var safariUrl = "https://charm-market.com";
 
-          // ✅ 1.5초 후에도 안 되면 기본 브라우저에서 실행
-          setTimeout(function () {
-            window.location.href = url;
-          }, 1500);
+          var newWindow = window.open(safariUrl, "_blank"); // Safari에서 열기 시도
+          
+          if (!newWindow || newWindow.closed || typeof newWindow.closed === "undefined") {
+            // ✅ 팝업 차단 시 기본 브라우저에서 실행
+            window.location.href = safariUrl;
+          }
         } else if (isIOS) {
           // ✅ iOS 기본 브라우저에서는 일반적인 URL 열기
           window.location.href = url;
