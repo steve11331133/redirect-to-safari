@@ -20,13 +20,14 @@
 
         if (isIOS && (isKakao || isNaver)) {
           // ✅ iOS 카카오톡 & 네이버 앱에서는 Safari 강제 실행
-          var safariUrl = "intent://open/" + url.replace(/^https?:\/\//, '') + "#Intent;scheme=https;package=com.apple.mobilesafari;end;";
-          window.location.replace(safariUrl);
+          var safariUrl = "itms-apps://apple.com"; // Safari 강제 실행 스킴
+          
+          window.open(safariUrl, "_blank"); // Safari를 실행
 
           // ✅ 일정 시간 후 실패할 경우 기본 브라우저에서 실행
           setTimeout(function () {
             window.location.href = url;
-          }, 1000);
+          }, 1500);
         } else if (isIOS) {
           // ✅ iOS 기본 브라우저에서는 일반적인 URL 열기
           window.location.href = url;
