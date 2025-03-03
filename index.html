@@ -46,32 +46,32 @@
 <body>
     <div class="container">
         <h2>Safari에서 Charm Market을 열어주세요</h2>
-        <p>일부 앱에서는 기능이 제한될 수 있습니다.<br>아래 버튼을 눌러 Safari에서 Charm Market을 열어주세요.</p>
-        <a class="button" href="#" onclick="openInSafari(); return false;">📢 Safari에서 열기</a>
+        <p>카카오톡 또는 네이버 앱에서는 기능이 제한될 수 있습니다.<br>아래 버튼을 눌러 Safari에서 Charm Market을 열어주세요.</p>
+        <a class="button" href="#" onclick="forceOpenSafari(); return false;">📢 Safari에서 열기</a>
     </div>
 
     <script>
-      function openInSafari() {
+      function forceOpenSafari() {
         var url = "https://charm-market.com"; // ✅ 최종 열릴 URL
         var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
         var isKakao = /KAKAOTALK/i.test(navigator.userAgent);
         var isNaver = /NAVER/i.test(navigator.userAgent);
 
         if (isIOS && (isKakao || isNaver)) {
-          // ✅ Safari 강제 실행 (Google 검색창 문제 해결)
-          var safariUrl = "web+browser://open-url?url=" + encodeURIComponent(url);
-          window.location.href = safariUrl;
+          // ✅ Safari에서 강제 실행
+          var safariUrl = "charm-market://" + encodeURIComponent(url);
+          location.replace(safariUrl);
 
           // ✅ 1.5초 후에도 실행되지 않으면 기본 브라우저에서 실행
           setTimeout(function () {
-            window.location.href = url;
+            location.href = url;
           }, 1500);
         } else if (isIOS) {
           // ✅ iOS 기본 브라우저에서는 일반적인 URL 열기
-          window.location.href = url;
+          location.href = url;
         } else {
           // ✅ Android에서는 기본 브라우저에서 실행
-          window.location.href = url;
+          location.href = url;
         }
       }
     </script>
