@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Safari에서 열기</title>
+</head>
+<body>
+    <h2>Safari에서 Charm Market을 열어주세요</h2>
+    <p>카카오톡 또는 네이버 앱에서는 기능이 제한될 수 있습니다.<br> 아래 버튼을 눌러 Safari에서 Charm Market을 열어주세요.</p>
+
+    <a id="open-safari-btn" href="https://charm-market.com">📢 Safari에서 열기</a>
+
+    <script>
+      var isKakao = /KAKAOTALK/i.test(navigator.userAgent);
+      var isNaver = /NAVER/i.test(navigator.userAgent);
+
+      if (!isKakao && !isNaver) {
+          // ✅ 카카오톡 & 네이버 브라우저가 아니면 자동 이동
+          window.location.href = "https://charm-market.com";
+      }
+    </script>
+</body>
+</html>
