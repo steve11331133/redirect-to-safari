@@ -4,97 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charm Market - Safari에서 열기</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            font-family: "Arial", sans-serif;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-        }
-        .container {
-            max-width: 360px;
-            background: white;
-            padding: 24px;
-            border-radius: 12px;
-            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.15);
-            text-align: center;
-        }
-        h2 {
-            color: #212529;
-            font-size: 20px;
-            margin-bottom: 12px;
-        }
-        p {
-            font-size: 14px;
-            color: #6c757d;
-            margin-bottom: 20px;
-        }
-        .button {
-            display: block;
-            width: 100%;
-            padding: 14px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            color: white;
-            background: #007AFF;
-            border: none;
-            border-radius: 8px;
-            text-decoration: none;
-            cursor: pointer;
-            box-shadow: 0px 4px 10px rgba(0, 122, 255, 0.2);
-            transition: all 0.3s ease-in-out;
-        }
-        .button:hover {
-            background: #005ecb;
-            box-shadow: 0px 6px 12px rgba(0, 94, 203, 0.3);
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Safari에서 참마켓을 열어주세요</h2>
-        <p>카카오톡 또는 네이버 앱에서는 기능이 제한될 수 있습니다.<br>아래 버튼을 눌러 Safari에서 Charm Market을 열어주세요.</p>
-        <button class="button" onclick="openCharmMarket();">참마켓 바로가기</button>
-    </div>
-
+    <meta http-equiv="refresh" content="0;url=https://charm-market.com" id="desktop-redirect">
     <script>
-      function openCharmMarket() {
-        var url = "https://charm-market.com"; // ✅ 최종 열릴 URL
-        var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-        var isAndroid = /Android/i.test(navigator.userAgent);
+        var url = "https://charm-market.com";
+        var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         var isKakao = /KAKAOTALK/i.test(navigator.userAgent);
         var isNaver = /NAVER/i.test(navigator.userAgent);
-        var isMobile = isIOS || isAndroid;
 
-        if (isMobile && (isKakao || isNaver)) {
-          // ✅ 모바일 환경 (카카오톡, 네이버 브라우저)에서 Safari 강제 실행
-          var safariUrl = "x-web-search://?" + encodeURIComponent(url);
-          window.location.href = safariUrl;
+        if (isMobile) {
+            if (isKakao || isNaver) {
+                var safariUrl = "x-web-search://?" + encodeURIComponent(url);
+                window.location.href = safariUrl;
 
-          // ✅ 1.5초 후에도 실행되지 않으면 기본 브라우저에서 실행
-          setTimeout(function () {
-            window.location.href = url;
-          }, 1500);
-        } else if (isMobile) {
-          // ✅ iOS & Android 모바일 기본 브라우저에서 실행
-          window.location.href = url;
-        } else {
-          // ✅ 데스크톱 환경에서 강제 이동
-          try {
-            window.location.replace(url);
-          } catch (e) {
-            window.open(url, "_self");
-          }
+                setTimeout(function () {
+                    window.location.href = url;
+                }, 1500);
+            } else {
+                window.location.href = url;
+            }
         }
-      }
     </script>
+</head>
+<body>
+    <h2>Safari에서 Charm Market을 열어주세요</h2>
+    <p>카카오톡 또는 네이버 앱에서는 기능이 제한될 수 있습니다.<br>아래 버튼을 눌러 Safari에서 Charm Market을 열어주세요.</p>
+    <a href="https://charm-market.com" id="open-button">참마켓 바로가기</a>
 </body>
 </html>
