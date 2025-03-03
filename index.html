@@ -4,30 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charm Market - 이동 중...</title>
-    <meta http-equiv="refresh" content="0; url=https://charm-market.com">
     <script>
         var url = "https://charm-market.com";
-        var isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        var isAndroid = /Android/i.test(navigator.userAgent);
         var isKakao = /KAKAOTALK/i.test(navigator.userAgent);
         var isNaver = /NAVER/i.test(navigator.userAgent);
 
-        if (isMobile) {
-            if (isKakao || isNaver) {
-                // ✅ 카카오톡 & 네이버 앱에서 Safari로 강제 실행
-                var safariUrl = "x-web-search://?" + encodeURIComponent(url);
-                window.location.href = safariUrl;
+        if (isIOS && isKakao) {
+            // ✅ iPhone 카카오톡 브라우저 → Safari 강제 실행
+            var safariUrl = "x-web-search://?" + encodeURIComponent(url);
+            window.location.href = safariUrl;
 
-                // ✅ 1.5초 후에도 실행되지 않으면 기본 브라우저에서 열기
-                setTimeout(function () {
-                    window.location.href = url;
-                }, 1500);
-            } else {
-                // ✅ 일반 모바일 브라우저에서는 바로 실행
+            setTimeout(function () {
                 window.location.href = url;
-            }
+            }, 1500);
+        } else if (isAndroid && isKakao) {
+            // ✅ Android 카카오톡 브라우저 → 기본 브라우저 (Chrome, Samsung Internet 등)로 이동
+            var androidUrl = "intent://" + url.replace(/^https?:\/\//, '') + "#Intent;scheme=https;package=com.android.chrome;end;";
+            window.location.href = androidUrl;
+
+            setTimeout(function () {
+                window.location.href = url;
+            }, 1500);
+        } else if (isIOS) {
+            // ✅ 일반 iPhone 브라우저 → Safari에서 열기
+            window.location.href = url;
+        } else if (isAndroid) {
+            // ✅ 일반 Android 브라우저 → 기본 브라우저에서 열기
+            window.location.href = url;
         } else {
-            // ✅ 데스크톱에서는 즉시 이동
-            window.location.replace(url);
+            // ✅ 데스크톱 환경 → 기본 브라우저에서 즉시 이동
+            try {
+                window.location.replace(url);
+            } catch (e) {
+                window.open(url, "_self");
+            }
         }
     </script>
 </head>
