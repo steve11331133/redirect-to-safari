@@ -68,11 +68,13 @@
       function openInSafari() {
         var url = "https://charm-market.com"; // ✅ 최종 열릴 URL
         var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        var isAndroid = /Android/i.test(navigator.userAgent);
         var isKakao = /KAKAOTALK/i.test(navigator.userAgent);
         var isNaver = /NAVER/i.test(navigator.userAgent);
+        var isMobile = isIOS || isAndroid;
 
-        if (isIOS && (isKakao || isNaver)) {
-          // ✅ Safari를 강제 실행하는 URL Scheme 사용
+        if (isMobile && (isKakao || isNaver)) {
+          // ✅ 모바일 환경에서는 Safari 강제 실행 시도
           var safariUrl = "x-web-search://?" + encodeURIComponent(url);
           window.location.href = safariUrl;
 
@@ -80,14 +82,27 @@
           setTimeout(function () {
             window.location.href = url;
           }, 1500);
-        } else if (isIOS) {
-          // ✅ iOS 기본 브라우저에서는 일반적인 URL 열기
+        } else if (isMobile) {
+          // ✅ iOS & Android 모바일 기본 브라우저에서 실행
           window.location.href = url;
         } else {
-          // ✅ Android에서는 기본 브라우저에서 실행
-          window.location.href = url;
+          // ✅ 데스크톱 환경에서는 직접 사이트로 리디렉트
+          window.location.replace(url);
         }
       }
+
+      // ✅ 웹 브라우저에서 자동 리디렉션 (데스크톱 환경에서)
+      document.addEventListener("DOMContentLoaded", function() {
+        var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        var isAndroid = /Android/i.test(navigator.userAgent);
+        var isMobile = isIOS || isAndroid;
+
+        if (!isMobile) {
+            setTimeout(function () {
+                window.location.replace("https://charm-market.com");
+            }, 1500);
+        }
+      });
     </script>
 </body>
 </html>
