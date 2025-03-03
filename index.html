@@ -14,20 +14,24 @@
     <script>
       function openInSafari() {
         var url = "https://charm-market.com"; // ✅ 최종 열릴 URL
-
-        // iOS인지 확인
         var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        var isKakao = /KAKAOTALK/i.test(navigator.userAgent);
+        var isNaver = /NAVER/i.test(navigator.userAgent);
 
-        if (isIOS) {
-          // ✅ Safari로 강제 이동
-          window.open(url, "_blank");
+        if (isIOS && (isKakao || isNaver)) {
+          // ✅ iOS 카카오톡 & 네이버 앱에서는 Safari 강제 실행
+          var safariUrl = "intent://open/" + url.replace(/^https?:\/\//, '') + "#Intent;scheme=https;package=com.apple.mobilesafari;end;";
+          window.location.replace(safariUrl);
 
-          // ✅ 500ms 후 새 창이 안 뜰 경우 기본 브라우저에서 열기
+          // ✅ 일정 시간 후 실패할 경우 기본 브라우저에서 실행
           setTimeout(function () {
             window.location.href = url;
-          }, 500);
+          }, 1000);
+        } else if (isIOS) {
+          // ✅ iOS 기본 브라우저에서는 일반적인 URL 열기
+          window.location.href = url;
         } else {
-          // ✅ Android & 일반 브라우저는 기본 방식 사용
+          // ✅ Android에서는 기본 브라우저에서 실행
           window.location.href = url;
         }
       }
