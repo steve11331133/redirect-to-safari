@@ -48,6 +48,7 @@
             border: none;
             border-radius: 8px;
             text-decoration: none;
+            cursor: pointer;
             box-shadow: 0px 4px 10px rgba(0, 122, 255, 0.2);
             transition: all 0.3s ease-in-out;
         }
@@ -61,7 +62,7 @@
     <div class="container">
         <h2>Safari에서 참마켓을 열어주세요</h2>
         <p>카카오톡 또는 네이버 앱에서는 기능이 제한될 수 있습니다.<br>아래 버튼을 눌러 Safari에서 Charm Market을 열어주세요.</p>
-        <a class="button" href="#" onclick="openInSafari(); return false;">참마켓 바로가기</a>
+        <button class="button" onclick="openInSafari();">참마켓 바로가기</button>
     </div>
 
     <script>
@@ -74,7 +75,7 @@
         var isMobile = isIOS || isAndroid;
 
         if (isMobile && (isKakao || isNaver)) {
-          // ✅ 모바일 환경에서는 Safari 강제 실행 시도
+          // ✅ 모바일 환경 (카카오톡, 네이버 브라우저)에서 Safari 강제 실행
           var safariUrl = "x-web-search://?" + encodeURIComponent(url);
           window.location.href = safariUrl;
 
@@ -86,7 +87,7 @@
           // ✅ iOS & Android 모바일 기본 브라우저에서 실행
           window.location.href = url;
         } else {
-          // ✅ 데스크톱 환경에서는 직접 사이트로 리디렉트
+          // ✅ 데스크톱 환경에서는 즉시 사이트로 이동
           window.location.replace(url);
         }
       }
@@ -100,7 +101,7 @@
         if (!isMobile) {
             setTimeout(function () {
                 window.location.replace("https://charm-market.com");
-            }, 1500);
+            }, 1000); // 1초 후 자동 이동
         }
       });
     </script>
