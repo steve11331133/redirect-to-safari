@@ -41,64 +41,38 @@
         .button:hover {
             background-color: #005ecb;
         }
-        .copy-box {
-            margin-top: 20px;
-            padding: 10px;
-            background: #eee;
-            border-radius: 5px;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Safari에서 Charm Market을 열어주세요</h2>
-        <p>카카오톡에서는 Safari를 자동으로 열 수 없습니다.<br>아래 버튼을 눌러 Safari에서 Charm Market을 여세요.</p>
-        
+        <p>카카오톡 또는 네이버 앱에서는 기능이 제한될 수 있습니다.<br>아래 버튼을 눌러 Safari에서 Charm Market을 열어주세요.</p>
         <a class="button" href="#" onclick="openInSafari(); return false;">📢 Safari에서 열기</a>
-
-        <div class="copy-box" onclick="copyUrl()">📋 클릭하여 URL 복사: <br> 
-            <strong id="site-url">https://charm-market.com</strong>
-        </div>
-
-        <p>복사된 링크를 Safari 주소창에 붙여넣어 주세요.</p>
     </div>
 
     <script>
       function openInSafari() {
-        var url = "https://charm-market.com";
+        var url = "https://charm-market.com"; // ✅ 최종 열릴 URL
         var isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
         var isKakao = /KAKAOTALK/i.test(navigator.userAgent);
         var isNaver = /NAVER/i.test(navigator.userAgent);
 
         if (isIOS && (isKakao || isNaver)) {
-            alert("📢 Safari에서 여는 중... 만약 자동으로 열리지 않으면 직접 Safari에서 열어주세요.");
+          // ✅ Safari를 강제 실행하는 URL Scheme 사용
+          var safariUrl = "x-web-search://?" + encodeURIComponent(url);
+          window.location.href = safariUrl;
 
-            // ✅ 1. 강제로 Safari 열기 시도
-            var newWindow = window.open(url, "_blank");
-
-            if (!newWindow || newWindow.closed || typeof newWindow.closed === "undefined") {
-                // ✅ 2. 팝업 차단 시 location.href로 강제 이동
-                setTimeout(function () {
-                    location.href = url;
-                }, 1000);
-            }
+          // ✅ 1.5초 후에도 실행되지 않으면 기본 브라우저에서 실행
+          setTimeout(function () {
+            window.location.href = url;
+          }, 1500);
         } else if (isIOS) {
-            // ✅ iOS 기본 브라우저에서는 일반적인 URL 열기
-            window.location.href = url;
+          // ✅ iOS 기본 브라우저에서는 일반적인 URL 열기
+          window.location.href = url;
         } else {
-            // ✅ Android에서는 기본 브라우저에서 실행
-            window.location.href = url;
+          // ✅ Android에서는 기본 브라우저에서 실행
+          window.location.href = url;
         }
-      }
-
-      function copyUrl() {
-        var copyText = document.getElementById("site-url").innerText;
-        navigator.clipboard.writeText(copyText).then(function() {
-            alert("✅ 링크가 복사되었습니다! Safari에서 직접 열어주세요.");
-        }, function(err) {
-            alert("❌ 링크 복사에 실패했습니다. 직접 입력해 주세요.");
-        });
       }
     </script>
 </body>
